@@ -6,9 +6,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float walkingSpeed = 3f;
-    [SerializeField] private float sprintingSped = 5f;
+    [SerializeField] private float sprintingSpeed = 5f;
     private float speed = 3f;
     private Vector2 direction;
+
+    private bool isDashing = false;
 
     private Rigidbody2D rigidBody;
 
@@ -25,18 +27,36 @@ public class PlayerMovement : MonoBehaviour
         direction.y = Input.GetAxisRaw("Vertical");
 
         ManageSprint();
+        ManageDash();
     }
 
     private void FixedUpdate()
     {
-        rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * speed);
+        if(!isDashing)
+            rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * speed);
+        else
+        {
+            rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * walkingSpeed * 10);
+            isDashing = false;
+        }
     }
 
     private void ManageSprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            speed = sprintingSped;
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-            speed = walkingSpeed;
+        if (!isDashing)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+                speed = sprintingSpeed;
+            else
+                speed = walkingSpeed;
+        }
+    }
+
+    private void ManageDash()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isDashing = true;
+        }
     }
 }
