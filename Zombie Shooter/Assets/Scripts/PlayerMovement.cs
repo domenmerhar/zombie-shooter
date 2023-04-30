@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float walkingSpeed = 3f;
+    [SerializeField] private float sprintingSped = 5f;
+    private float speed = 3f;
     private Vector2 direction;
 
     private Rigidbody2D rigidBody;
@@ -21,10 +23,20 @@ public class PlayerMovement : MonoBehaviour
     {
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.y = Input.GetAxisRaw("Vertical");
+
+        ManageSprint();
     }
 
     private void FixedUpdate()
     {
         rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * speed);
+    }
+
+    private void ManageSprint()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            speed = sprintingSped;
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            speed = walkingSpeed;
     }
 }
