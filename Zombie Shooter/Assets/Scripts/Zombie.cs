@@ -6,7 +6,7 @@ public class Zombie : MonoBehaviour
 {
     private GameObject player;
 
-    private float speed = 2f;
+    private float speed = 2.5f;
     private float walkSpeed = 2f;
     private Vector3 distance;
 
