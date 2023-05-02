@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 direction;
 
     private bool isDashing = false;
+    private float dashCooldown = 3f;
+    private float dashTimer = 1.5f;
 
     private Rigidbody2D rigidBody;
     [SerializeField] private new Camera camera;
@@ -63,9 +65,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void ManageDash()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && dashTimer >= dashCooldown)
         {
             isDashing = true;
+            dashTimer = 0;
+        }
+        else
+        {
+            dashTimer += Time.deltaTime;
         }
     }
 }

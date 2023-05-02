@@ -22,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Mouse0) && shootTimer >= shootCooldown)
+        if (Input.GetKey(KeyCode.Mouse0) && shootTimer >= shootCooldown)
         {
             Shoot(bulletForce);
             shootTimer = 0;
@@ -37,6 +37,6 @@ public class PlayerShooting : MonoBehaviour
     {
         GameObject bullet = Instantiate(BulletPrefab, ShootingPoint.position, ShootingPoint.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(ShootingPoint.right * force, ForceMode2D.Impulse);
-        Destroy(bullet, .25f);
+        Destroy(bullet, .7f);
     }
 }
