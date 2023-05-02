@@ -19,6 +19,8 @@ public class Zombie : MonoBehaviour
 
     private Vector2 lookDirection;
 
+    public float health = 50f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,6 @@ public class Zombie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     private void FixedUpdate()
