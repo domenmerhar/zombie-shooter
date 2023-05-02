@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing = false;
 
     private Rigidbody2D rigidBody;
+    [SerializeField] private new Camera camera;
+
+    Vector2 mousePosition;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
         ManageSprint();
         ManageDash();
+
+        mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void FixedUpdate()
@@ -39,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
             rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * walkingSpeed * 10);
             isDashing = false;
         }
+
+        Vector2 lookDirection = mousePosition - rigidBody.position;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        rigidBody.rotation = angle;
     }
 
     private void ManageSprint()
