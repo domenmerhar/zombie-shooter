@@ -10,6 +10,9 @@ public class PlayerShooting : MonoBehaviour
 
     private float bulletForce = 20f;
 
+    private float shootCooldown = 0.1f;
+    private float shootTimer = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +22,14 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Mouse0))
+        if(Input.GetKey(KeyCode.Mouse0) && shootTimer >= shootCooldown)
         {
             Shoot(bulletForce);
+            shootTimer = 0;
+        }
+        else
+        {
+            shootTimer += Time.deltaTime;
         }
     }
 
@@ -29,6 +37,6 @@ public class PlayerShooting : MonoBehaviour
     {
         GameObject bullet = Instantiate(BulletPrefab, ShootingPoint.position, ShootingPoint.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(ShootingPoint.right * force, ForceMode2D.Impulse);
-        
+        Destroy(bullet, .25f);
     }
 }
