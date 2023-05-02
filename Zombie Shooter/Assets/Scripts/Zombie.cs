@@ -17,6 +17,8 @@ public class Zombie : MonoBehaviour
     private float sprintCooldown = 5f;
     private float sprintTimer = 6f;
 
+    private Vector2 lookDirection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,9 @@ public class Zombie : MonoBehaviour
 
             distance = player.transform.position - rb.transform.position;
             rb.velocity = distance.normalized * speed;
+
+            lookDirection = this.gameObject.transform.position - player.transform.position;
+            this.rb.rotation = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg + 90f;
         }
     }
 }
