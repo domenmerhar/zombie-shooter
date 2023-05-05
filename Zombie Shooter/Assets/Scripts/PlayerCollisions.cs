@@ -11,6 +11,8 @@ public class PlayerCollisions : MonoBehaviour
         {
             this.gameObject.GetComponent<PlayerInventory>().AddGrenades(1);
             Destroy(collision.gameObject);
+
+            collision.GetComponent<Animator>().SetBool("isPicked", true);
         }
     }
 }
