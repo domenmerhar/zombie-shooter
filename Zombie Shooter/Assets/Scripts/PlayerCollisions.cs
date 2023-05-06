@@ -10,7 +10,7 @@ public class PlayerCollisions : MonoBehaviour
         if(collision.CompareTag("Grenade"))
         {
             this.gameObject.GetComponent<PlayerInventory>().AddGrenades(1);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject, .4f);
 
             collision.GetComponent<Animator>().SetBool("isPicked", true);
         }
