@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
-    private int health = 100;
+    private float health = 100;
 
-    public void DamagePlayer(int damage)
+    public void DamagePlayer(float damage)
     {
         health -= damage;
         healthBar.fillAmount = health / 100;
     }
 
-    public void HealPlayer(int heal)
+    public void HealPlayer(float heal)
     {
         health += heal;
         healthBar.fillAmount = health / 100;
+    }
+
+    private void Update()
+    {
+        Debug.Log(health / 100);
     }
 }
