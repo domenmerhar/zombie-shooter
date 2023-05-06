@@ -8,15 +8,21 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image healthBar;
     private float health = 100;
 
-    public void DamagePlayer(float damage)
+    public void ChangeHealth(float changeAmount)
     {
-        health -= damage;
-        healthBar.fillAmount = health / 100;
+        health += changeAmount;
+        UpdateHealthBar();
     }
 
-    public void HealPlayer(float heal)
+    private void UpdateHealthBar()
     {
-        health += heal;
         healthBar.fillAmount = health / 100;
+
+        if(health > 100) health = 100;
+    }
+
+    private void Update()
+    {
+        Debug.Log(health);
     }
 }
