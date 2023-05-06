@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCollisions : MonoBehaviour
 {
     [SerializeField] private PlayerHealth playerHealthScript;
+    [SerializeField] private PlayerInventory playerInventoryScript;
 
     private float invincibilityDuration = 0.5f;
     private float invincibilityTimer = 0.5f;
@@ -14,7 +15,14 @@ public class PlayerCollisions : MonoBehaviour
     {
         if(collision.CompareTag("Grenade"))
         {
-            this.gameObject.GetComponent<PlayerInventory>().AddGrenades(1);
+            playerInventoryScript.AddGrenades(1);
+            Destroy(collision.gameObject, .4f);
+
+            collision.GetComponent<Animator>().SetBool("isPicked", true);
+        }
+        else if (collision.CompareTag("Health"))
+        {
+            playerHealthScript.HealPlayer(UnityEngine.Random.Range(5f, 15f));
             Destroy(collision.gameObject, .4f);
 
             collision.GetComponent<Animator>().SetBool("isPicked", true);

@@ -19,9 +19,4 @@ public class PlayerHealth : MonoBehaviour
         health += heal;
         healthBar.fillAmount = health / 100;
     }
-
-    private void Update()
-    {
-        Debug.Log(health / 100);
-    }
 }
