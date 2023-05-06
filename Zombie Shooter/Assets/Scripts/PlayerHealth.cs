@@ -11,18 +11,11 @@ public class PlayerHealth : MonoBehaviour
     public void ChangeHealth(float changeAmount)
     {
         health += changeAmount;
-        UpdateHealthBar();
+        if (health > 100) health = 100;
     }
-
-    private void UpdateHealthBar()
-    {
-        healthBar.fillAmount = health / 100;
-
-        if(health > 100) health = 100;
-    }
-
     private void Update()
     {
         Debug.Log(health);
+        healthBar.fillAmount = Mathf.MoveTowards(healthBar.fillAmount, health / 100,  2 * Time.deltaTime);
     }
 }
