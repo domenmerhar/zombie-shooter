@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class Zombie : MonoBehaviour
 {
     private GameObject player;
+
+    public int damage;
 
     private float speed = 2.5f;
     private float walkSpeed = 2f;
@@ -26,11 +29,10 @@ public class Zombie : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        
+        damage = Convert.ToInt32(UnityEngine.Random.Range(8f, 12f));
+        speed = UnityEngine.Random.Range(speed * .80f, speed * 1.20f);
+        walkSpeed = UnityEngine.Random.Range(speed * .80f, speed * 1.20f);
     }
 
     private void FixedUpdate()
