@@ -11,6 +11,7 @@ public class BulletScript : MonoBehaviour
         if(collision.CompareTag("Zombie"))
         {
             DamageZombie(collision);
+            Destroy(this.gameObject);
         }
     }
 
