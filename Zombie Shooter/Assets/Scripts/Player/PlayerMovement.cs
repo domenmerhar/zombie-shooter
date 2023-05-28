@@ -51,23 +51,21 @@ public class PlayerMovement : MonoBehaviour
         {
             rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * speed);
 
-            ManageStamina();
+            StaminaRegen();
         }
-        else
+        else //When dashing
         {
-            rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * walkingSpeed * 10);
+            if (playerStaminaScript.stamina > dashStaminaDrain)
+            {
+                rigidBody.MovePosition(rigidBody.position + direction.normalized * Time.deltaTime * walkingSpeed * 10);
+                playerStaminaScript.ChangeStamina(dashStaminaDrain);
+            }
             isDashing = false;
-            playerStaminaScript.ChangeStamina(dashStaminaDrain);
         }
-
-        Vector2 lookDirection = mousePosition - rigidBody.position;
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-        rigidBody.rotation = angle;
-
-        
+        RotatePlayer();
     }
-
-    private void ManageStamina()
+    
+    private void StaminaRegen()
     {
         if (speed < sprintingSpeed) //Triggers when walking
         {
@@ -83,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDashing)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && playerStaminaScript.stamina > 0)
                 speed = sprintingSpeed;
             else
                 speed = walkingSpeed;
@@ -101,5 +99,12 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer += Time.deltaTime;
         }
+    }
+
+    private void RotatePlayer()
+    {
+        Vector2 lookDirection = mousePosition - rigidBody.position;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        rigidBody.rotation = angle;
     }
 }
