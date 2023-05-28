@@ -8,6 +8,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image healthBar;
     private float health = 100;
 
+    [SerializeField] private Transform playerTransform;
+
     public void ChangeHealth(float changeAmount)
     {
         health += changeAmount;
@@ -16,5 +18,28 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         healthBar.fillAmount = Mathf.MoveTowards(healthBar.fillAmount, health / 100,  2 * Time.deltaTime);
+        
+        if(health <= 0)
+        {
+            OnDeath();
+            health = 100;
+        }
+    }
+
+    private void OnDeath()
+    {
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+
+        foreach(GameObject zombie in zombies) 
+        { 
+            Destroy(zombie);
+        }
+
+        TeleportPlayer(new Vector3(0, 0, 0));
+    }
+
+    private void TeleportPlayer(Vector3 position)
+    {
+        playerTransform.position = position;
     }
 }
